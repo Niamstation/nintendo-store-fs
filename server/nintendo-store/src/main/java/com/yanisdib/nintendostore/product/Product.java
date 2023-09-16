@@ -1,7 +1,7 @@
 package com.yanisdib.nintendostore.product;
 
-import com.yanisdib.nintendostore.constants.Availability;
-import jdk.jfr.Category;
+import com.yanisdib.nintendostore.category.Category;
+import com.yanisdib.nintendostore.constants.ProductAvailability;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,44 +16,49 @@ public class Product {
     @Id
     private String id;
 
+    private String reference;
     private String name;
     private String description;
     private Set<Category> categories;
     private LocalDateTime releaseDate;
-    private Double unitPrice;
+    private double unitPrice;
     private BigDecimal stock;
-    private Availability availability;
+    private ProductAvailability productAvailability;
 
     public Product() {
+        super();
+        this.reference = "";
         this.name = "";
         this.description = "";
         this.releaseDate = LocalDateTime.now();
         this.unitPrice = 0.0;
         this.stock = new BigDecimal(0);
-        this.availability = Availability.UNRELEASED;
-        this.categories = new HashSet<Category>();
+        this.productAvailability = ProductAvailability.UNRELEASED;
+        this.categories = new HashSet<>();
     }
 
     public Product(
+            String reference,
             String name,
             String description,
             Set<Category> categories,
             LocalDateTime releaseDate,
-            Double unitPrice,
+            double unitPrice,
             BigDecimal stock,
-            Availability availability
+            ProductAvailability productAvailability
     ) {
+        this.reference = reference;
         this.name = name;
         this.description = description;
         this.unitPrice = unitPrice;
         this.categories = categories;
         this.releaseDate = releaseDate;
         this.stock = stock;
-        this.availability = availability;
+        this.productAvailability = productAvailability;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -62,6 +67,14 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
     public String getDescription() {
@@ -88,11 +101,11 @@ public class Product {
         this.releaseDate = releaseDate;
     }
 
-    public Double getUnitPrice() {
+    public double getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(Double unitPrice) {
+    public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
     }
 
@@ -104,12 +117,12 @@ public class Product {
         this.stock = stock;
     }
 
-    public Availability getAvailability() {
-        return availability;
+    public ProductAvailability getAvailability() {
+        return productAvailability;
     }
 
-    public void setAvailability(Availability availability) {
-        this.availability = availability;
+    public void setAvailability(ProductAvailability productAvailability) {
+        this.productAvailability = productAvailability;
     }
 
 }
